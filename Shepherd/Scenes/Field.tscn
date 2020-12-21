@@ -2,9 +2,9 @@
 
 [ext_resource path="res://Scripts/Sheep.gd" type="Script" id=1]
 [ext_resource path="res://sheep.tres" type="ArrayMesh" id=2]
-[ext_resource path="res://Shepherd.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scenes/Shepherd.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Scripts/Camera.gd" type="Script" id=4]
-[ext_resource path="res://Shepherd.gd" type="Script" id=5]
+[ext_resource path="res://Scripts/Shepherd.gd" type="Script" id=5]
 [ext_resource path="res://icon.png" type="Texture" id=6]
 
 [sub_resource type="PhysicsMaterial" id=1]
