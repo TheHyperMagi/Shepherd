@@ -23,8 +23,8 @@ func _physics_process(delta):
 	
 	input = input.normalized()
 	
-	rotate_from_movement(input)
-	
+	if input != Vector3(0,0,0):
+		rotate_from_movement(input)
 	
 	#var direction = (transform.basis.x * input.x + transform.basis.z * input.z)
 	#velocity.x = direction.x * speed
