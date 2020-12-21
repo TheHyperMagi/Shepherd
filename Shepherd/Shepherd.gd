@@ -6,6 +6,8 @@ onready var mesh = get_node("MeshInstance")
 var speed = 10
 var velocity = Vector3()
 
+#Angle Variables
+
 func _physics_process(delta):
 	velocity.x = 0
 	velocity.z = 0
@@ -23,6 +25,7 @@ func _physics_process(delta):
 	
 	rotate_from_movement(input)
 	
+	
 	#var direction = (transform.basis.x * input.x + transform.basis.z * input.z)
 	#velocity.x = direction.x * speed
 	#velocity.z = direction.z * speed
@@ -34,18 +37,24 @@ func _physics_process(delta):
 
 func rotate_from_movement(input):
 #Calculates angle based on movement (currently hardcoded but its good enough for me)
+	var desired_angle = 0
+	
 	#Calculates for one direction
 	if input.z > 0:
-		rotation_degrees.y = 0
+		desired_angle = 0
 	elif input.z < 0:
-		rotation_degrees.y = 180
+		desired_angle = 180
 	if input.x > 0:
-		rotation_degrees.y = 90
+		desired_angle = 90
 	elif input.x < 0:
-		rotation_degrees.y = 270
+		desired_angle = 270
 	
-	#Calculates for axis
+	#Calculates for diagonals
 	if input.x != 0 && input.z != 0:
-		rotation_degrees.y = rad2deg(atan(input.z/input.x))
+		desired_angle = rad2deg(atan(input.z/input.x))
 		if input.z < 0:
-			rotation_degrees.y += 180
+			desired_angle += 180
+		
+	
+	#Smooth angle change
+	rotation_degrees.y = rad2deg(lerp_angle(deg2rad(rotation_degrees.y), deg2rad(desired_angle), 0.1))
