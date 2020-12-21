@@ -1,6 +1,8 @@
 extends Camera
 
-onready var sheep = get_node("../Sheep")
+onready var sheep = $"../Sheep"
+
+var dir = Vector3()
 
 func _process(delta):
-	transform.looking_at(sheep.global_transform.origin, Vector3(0,1,0))	
+	print(sheep.get_property_list())
