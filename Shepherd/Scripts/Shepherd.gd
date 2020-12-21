@@ -3,7 +3,7 @@ extends KinematicBody
 onready var mesh = get_node("MeshInstance")
 
 #Movement Variables
-var speed = 10
+var speed = 600
 var velocity = Vector3()
 
 #Angle Variables
@@ -29,8 +29,8 @@ func _physics_process(delta):
 	#var direction = (transform.basis.x * input.x + transform.basis.z * input.z)
 	#velocity.x = direction.x * speed
 	#velocity.z = direction.z * speed
-	velocity.x = input.x * speed
-	velocity.z = input.z * speed
+	velocity.x = input.x * speed * delta
+	velocity.z = input.z * speed * delta
 	
 	velocity = move_and_slide(velocity, Vector3.UP)
 
