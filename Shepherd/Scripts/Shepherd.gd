@@ -1,16 +1,15 @@
-extends KinematicBody
+extends "res://Scripts/entity.gd"
 
 onready var mesh = get_node("MeshInstance")
-
-#Movement Variables
-var speed = 600
-var velocity = Vector3()
 
 #Angle Variables
 
 func _physics_process(delta):
-	velocity.x = 0
-	velocity.z = 0
+	control_loop(delta)
+
+func control_loop(delta):
+	VELOCITY.x = 0
+	VELOCITY.z = 0
 	var input = Vector3()
 	if Input.is_action_pressed("move_forwards"):
 		input.z += 1
@@ -29,11 +28,10 @@ func _physics_process(delta):
 	#var direction = (transform.basis.x * input.x + transform.basis.z * input.z)
 	#velocity.x = direction.x * speed
 	#velocity.z = direction.z * speed
-	velocity.x = input.x * speed * delta
-	velocity.z = input.z * speed * delta
+	VELOCITY.x = input.x * SPEED * delta
+	VELOCITY.z = input.z * SPEED * delta
 	
-	velocity = move_and_slide(velocity, Vector3.UP)
-
+	VELOCITY = move_and_slide(VELOCITY, Vector3.UP)
 
 func rotate_from_movement(input):
 #Calculates angle based on movement (currently hardcoded but its good enough for me)
