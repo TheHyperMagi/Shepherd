@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Scripts/Sheep.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Shepherd.tscn" type="PackedScene" id=2]
@@ -37,6 +37,14 @@ surfaces/0 = {
 
 [sub_resource type="BoxShape" id=5]
 
+[sub_resource type="ProceduralSky" id=6]
+ground_bottom_color = Color( 1, 1, 1, 1 )
+ground_horizon_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="Environment" id=7]
+background_mode = 2
+background_sky = SubResource( 6 )
+
 [node name="Spatial" type="Spatial"]
 
 [node name="StaticBody" type="StaticBody" parent="."]
@@ -64,3 +72,6 @@ shape = SubResource( 5 )
 
 [node name="Shepherd" parent="." instance=ExtResource( 2 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.2002, 0 )
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( 7 )
