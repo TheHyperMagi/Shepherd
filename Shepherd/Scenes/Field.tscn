@@ -63,4 +63,4 @@ transform = Transform( 1, 0, 0, 0, 2.01381, 0, 0, 0, 1.76471, 0, 0, 0 )
 shape = SubResource( 5 )
 
 [node name="Shepherd" parent="." instance=ExtResource( 2 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4367, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.2002, 0 )
