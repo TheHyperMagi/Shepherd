@@ -10,7 +10,6 @@ func _physics_process(delta):
 func control_loop(delta):
 	var input = Vector3()
 	
-	# Player direction input
 	if Input.is_action_pressed("move_forwards"):
 		input.z -= 1
 	if Input.is_action_pressed("move_backwards"):
@@ -25,6 +24,9 @@ func control_loop(delta):
 #	if input != Vector3(0,0,0):
 #		rotate_from_movement(input)
 
+	#var direction = (transform.basis.x * input.x + transform.basis.z * input.z)
+	#velocity.x = direction.x * speed
+	#velocity.z = direction.z * speed
 	velocity = input * SPEED * delta
 	
 	velocity = move_and_slide(velocity, Vector3.UP)
