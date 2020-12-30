@@ -1,6 +1,7 @@
 extends "res://Scripts/entity.gd"
 
-onready var mesh = get_node("MeshInstance")
+onready var mesh = $MeshInstance
+onready var detection = $Detection
 
 var velocity = Vector3()
 
@@ -22,8 +23,8 @@ func control_loop(delta):
 	
 	input = input.normalized()
 	
-#	if input != Vector3(0,0,0):
-#		rotate_from_movement(input)
+	if input != Vector3(0,0,0):
+		rotate_from_movement(input)
 
 	velocity = input * SPEED * delta
 	
