@@ -2,7 +2,9 @@ extends "res://Scripts/entity.gd"
 
 onready var mesh = $MeshInstance
 onready var detection = $Detection
+onready var camera = get_node("../Camera")
 
+var speed = 1
 var velocity = Vector3()
 
 func _physics_process(delta):
@@ -25,9 +27,11 @@ func control_loop(delta):
 	
 	if input != Vector3(0,0,0):
 		rotate_from_movement(input)
-
-	var desired = input * SPEED * delta
-	velocity = velocity.move_toward(desired, 0.5)
+	
+	var direction = (camera.transform.basis.x * input.x + camera.transform.basis.z * input.z)
+	
+	velocity.x = direction.x * SPEED * delta
+	velocity.z = direction.z * SPEED * delta
 	
 	velocity = move_and_slide(velocity, Vector3.UP)
 
@@ -51,5 +55,7 @@ func rotate_from_movement(input):
 		if input.z > 0:
 			desired_angle += 180
 		
+	desired_angle += 45
+	
 	#Smooth angle change
 	rotation_degrees.y = rad2deg(lerp_angle(deg2rad(rotation_degrees.y), deg2rad(desired_angle), 0.1))
