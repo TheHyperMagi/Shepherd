@@ -51,6 +51,5 @@ func rotate_from_movement(input):
 		if input.z > 0:
 			desired_angle += 180
 		
-	
 	#Smooth angle change
 	rotation_degrees.y = rad2deg(lerp_angle(deg2rad(rotation_degrees.y), deg2rad(desired_angle), 0.1))

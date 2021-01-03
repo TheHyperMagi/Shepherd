@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Scripts/Sheep.gd" type="Script" id=1]
+[ext_resource path="res://Scripts/state_machine.gd" type="Script" id=2]
 
 [sub_resource type="SpatialMaterial" id=1]
 resource_name = "Material.001"
@@ -41,3 +42,6 @@ material/0 = null
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, 2.01381, 0, 0, 0, 1.76471, 0, 0, 0 )
 shape = SubResource( 3 )
+
+[node name="StateMachine" type="Node" parent="."]
+script = ExtResource( 2 )
