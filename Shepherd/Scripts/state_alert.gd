@@ -1,14 +1,11 @@
 extends Node
 
-class_name State
-
 var fsm: StateMachine
 
 func enter():
 	print("Hello from State 1!")
 	# Exit 2 seconds later
 	yield(get_tree().create_timer(2.0), "timeout")
-	exit("State2")
 
 func exit(next_state):
 	fsm.change_to(next_state)
