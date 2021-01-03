@@ -26,7 +26,8 @@ func control_loop(delta):
 	if input != Vector3(0,0,0):
 		rotate_from_movement(input)
 
-	velocity = input * SPEED * delta
+	var desired = input * SPEED * delta
+	velocity = velocity.move_toward(desired, 0.5)
 	
 	velocity = move_and_slide(velocity, Vector3.UP)
 
@@ -36,18 +37,18 @@ func rotate_from_movement(input):
 	
 	#Calculates for one direction
 	if input.z > 0:
-		desired_angle = 0
-	elif input.z < 0:
 		desired_angle = 180
+	elif input.z < 0:
+		desired_angle = 0
 	if input.x > 0:
-		desired_angle = 90
-	elif input.x < 0:
 		desired_angle = 270
+	elif input.x < 0:
+		desired_angle = 90
 	
 	#Calculates for diagonals
 	if input.x != 0 && input.z != 0:
 		desired_angle = rad2deg(atan(input.z/input.x))
-		if input.z < 0:
+		if input.z > 0:
 			desired_angle += 180
 		
 	
