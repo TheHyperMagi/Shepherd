@@ -1,61 +1,34 @@
 extends "res://Scripts/entity.gd"
 
 onready var mesh = $MeshInstance
-onready var detection = $Detection
 onready var camera = get_node("../Camera")
-
-var speed = 1
 var velocity = Vector3()
 
-func _physics_process(delta):
+func _physics_process(delta) -> void:
 	control_loop(delta)
 
-func control_loop(delta):
+func control_loop(delta) -> void:
 	var input = Vector3()
-	
 	# Player direction input
-	if Input.is_action_pressed("move_forwards"):
-		input.z -= 1
-	if Input.is_action_pressed("move_backwards"):
-		input.z += 1
-	if Input.is_action_pressed("move_left"):
-		input.x -= 1
-	if Input.is_action_pressed("move_right"):
-		input.x += 1
+	input.z = Input.get_action_strength("move_forwards") - Input.get_action_strength("move_backwards")
+	input.x = Input.get_action_strength("move_left") - Input.get_action_strength("move_right")
 	
 	input = input.normalized()
 	
-	if input != Vector3(0,0,0):
-		rotate_from_movement(input)
-	
-	var direction = (camera.transform.basis.x * input.x + camera.transform.basis.z * input.z)
-	
-	velocity.x = direction.x * SPEED * delta
-	velocity.z = direction.z * SPEED * delta
-	
-	velocity = move_and_slide(velocity, Vector3.UP)
-
-func rotate_from_movement(input):
-#Calculates angle based on movement (currently hardcoded but its good enough for me)
-	var desired_angle = 0
-	
-	#Calculates for one direction
-	if input.z > 0:
-		desired_angle = 0
-	elif input.z < 0:
-		desired_angle = 180
-	if input.x > 0:
-		desired_angle = 90
-	elif input.x < 0:
-		desired_angle = 270
-	
-	#Calculates for diagonals
-	if input.x != 0 && input.z != 0:
-		desired_angle = rad2deg(atan(input.z/input.x))
-		if input.z < 0:
-			desired_angle += 180
+	if input != Vector3.ZERO:
+		var dir = Vector2(input.x, input.z)
+		var cardinal_direction = int(4.0 * (dir.rotated(PI / 4.0).angle() + PI) / TAU)
+		rotation_degrees.y = lerp(rotation_degrees.y, rad2deg(cardinal_direction) + 45, 0.1) # require brain
 		
-	desired_angle += 45
+	if input.x != 0:
+		velocity.x = input.x * ACCELERATION * delta * TARGET_FPS
+	if input.z != 0:
+		velocity.z = input.z * ACCELERATION * delta * TARGET_FPS
 	
-	#Smooth angle change
-	rotation_degrees.y = rad2deg(lerp_angle(deg2rad(rotation_degrees.y), deg2rad(desired_angle), 0.1))
+	velocity.y -= GRAVITY * delta * TARGET_FPS
+	
+	if is_on_floor():
+		velocity.x = lerp(velocity.x, 0, 10 * delta)
+		velocity.z = lerp(velocity.z, 0, 10 * delta)
+		
+	velocity = move_and_slide(velocity, Vector3.UP, false, 4, 0.785398, false)
