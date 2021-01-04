@@ -1,10 +1,10 @@
 extends Camera
 
-export onready var target = get_node("../Shepherd")
+export onready var target = get_node("../Sheep")
 
-export (Vector3) var offset := Vector3(20, 10, 20)
-export (float) var zoom_in_limit := 10.0
-export (float) var zoom_out_limit := 40.0
+export var offset := Vector3(20, 10, 20)
+export var zoom_in_limit := 10.0
+export var zoom_out_limit := 40.0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
