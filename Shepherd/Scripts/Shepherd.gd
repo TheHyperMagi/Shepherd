@@ -41,4 +41,4 @@ func control_loop(delta) -> void:
 		velocity.x = lerp(velocity.x, 0, 10 * delta)
 		velocity.z = lerp(velocity.z, 0, 10 * delta)
 		
-	velocity = move_and_slide(velocity, Vector3.UP, false, 4, 0.785398, false)
+	velocity = move_and_slide(velocity)
