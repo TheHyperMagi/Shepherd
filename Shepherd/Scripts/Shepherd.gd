@@ -9,8 +9,8 @@ func _physics_process(delta) -> void:
 func control_loop(delta) -> void:
 	var input = Vector3()
 	# Player direction input
-	input.z = Input.get_action_strength("move_forwards") - Input.get_action_strength("move_backwards")
-	input.x = Input.get_action_strength("move_left") - Input.get_action_strength("move_right")
+	input.z = Input.get_action_strength("move_backwards") - Input.get_action_strength("move_forwards")
+	input.x = Input.get_action_strength("move_right") - Input.get_action_strength("move_left")
 	
 	input = input.normalized()
 	
@@ -32,10 +32,10 @@ func control_loop(delta) -> void:
 	
 	var direction = (camera.transform.basis.x * input.x + camera.transform.basis.z * input.z)
 	
-	if input.x != 0:
-		velocity.x = input.x * ACCELERATION * delta * TARGET_FPS
-	if input.z != 0:
-		velocity.z = input.z * ACCELERATION * delta * TARGET_FPS
+	if direction.x != 0:
+		velocity.x = direction.x * ACCELERATION * delta * TARGET_FPS
+	if direction.z != 0:
+		velocity.z = direction.z * ACCELERATION * delta * TARGET_FPS
 	
 	if is_on_floor():
 		velocity.x = lerp(velocity.x, 0, 10 * delta)
