@@ -17,23 +17,20 @@ func control_loop(delta) -> void:
 	var dir = Vector2(input.x, input.z)
 	var cardinal_direction = int(4.0 * (dir.rotated(PI / 4.0).angle() + PI) / TAU) # close approximation
 	
-	#forward 3
-	#back 1
-	#right 0
-	#left 2
-	
 	var angle: int
-	
-	if cardinal_direction == 0:
-		angle = -90
-	elif cardinal_direction == 1:
-		angle = 180
-	elif cardinal_direction == 2:
-		angle = 90
-	elif cardinal_direction == 3:
-		angle = -180
+	if input != Vector3.ZERO:
+		if cardinal_direction == 0:
+			angle = -90
+		elif cardinal_direction == 1:
+			angle = 180
+		elif cardinal_direction == 2:
+			angle = 90
+		elif cardinal_direction == 3:
+			angle = 0
 		
 	rotation_degrees.y = rad2deg(lerp_angle(deg2rad(rotation_degrees.y), deg2rad(angle), 0.1))
+	
+	var direction = (camera.transform.basis.x * input.x + camera.transform.basis.z * input.z)
 	
 	if input.x != 0:
 		velocity.x = input.x * ACCELERATION * delta * TARGET_FPS
