@@ -1,6 +1,6 @@
 extends Camera
 
-export onready var target = get_node("../Sheep")
+export onready var target = get_node("../Shepherd")
 
 export var offset := Vector3(20, 10, 20)
 export var zoom_in_limit := 10.0

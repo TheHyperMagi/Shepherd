@@ -7,38 +7,23 @@ func _physics_process(delta) -> void:
 	control_loop(delta)
 
 func control_loop(delta) -> void:
-	var input = Vector3()
-	# Player direction input
-	input.z = Input.get_action_strength("move_backwards") - Input.get_action_strength("move_forwards")
-	input.x = Input.get_action_strength("move_right") - Input.get_action_strength("move_left")
-	
-	input = input.normalized()
-	
-	var dir = Vector2(input.x, input.z)
-	var cardinal_direction = int(4.0 * (dir.rotated(PI / 4.0).angle() + PI) / TAU) # close approximation
-	
-	var angle: int
-	if input != Vector3.ZERO:
-		if cardinal_direction == 0:
-			angle = -90
-		elif cardinal_direction == 1:
-			angle = 180
-		elif cardinal_direction == 2:
-			angle = 90
-		elif cardinal_direction == 3:
-			angle = 0
-		
-	rotation_degrees.y = rad2deg(lerp_angle(deg2rad(rotation_degrees.y), deg2rad(angle), 0.1))
-	
-	var direction = (camera.transform.basis.x * input.x + camera.transform.basis.z * input.z)
-	
-	if direction.x != 0:
-		velocity.x = direction.x * ACCELERATION * delta * TARGET_FPS
-	if direction.z != 0:
-		velocity.z = direction.z * ACCELERATION * delta * TARGET_FPS
-	
+	var input = Vector3(
+		Input.get_action_strength("move_right") - Input.get_action_strength("move_left"),
+		0,
+		Input.get_action_strength("move_backwards") - Input.get_action_strength("move_forwards")
+		).normalized()
+
 	if is_on_floor():
 		velocity.x = lerp(velocity.x, 0, 10 * delta)
 		velocity.z = lerp(velocity.z, 0, 10 * delta)
 		
+	var direction = (camera.transform.basis.x * input.x + camera.transform.basis.z * input.z)
+	
+	if direction.x != 0 && direction.z != 0:
+		velocity.x = direction.x * ACCELERATION * delta * TARGET_FPS
+		velocity.z = direction.z * ACCELERATION * delta * TARGET_FPS
+	
+	var angle = stepify(atan2(-direction.x, -direction.z), deg2rad(45))
+	rotation.y = lerp_angle(rotation.y, angle, delta * 5.0)
+
 	velocity = move_and_slide(velocity)
