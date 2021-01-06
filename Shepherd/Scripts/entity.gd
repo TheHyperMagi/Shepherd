@@ -1,7 +1,6 @@
 extends KinematicBody
 
 export var ACCELERATION := 8
-export var VELOCITY := Vector3()
 export var TARGET_FPS := 60
 var GRAVITY : int = ProjectSettings.get_setting("physics/3d/default_gravity") # get from the project settings
 var velocity := Vector3()
