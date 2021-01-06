@@ -19,7 +19,7 @@ func control_loop(delta) -> void:
 		
 	var direction = (camera.transform.basis.x * input.x + camera.transform.basis.z * input.z)
 	
-	if direction.x != 0 && direction.z != 0:
+	if direction != Vector3.ZERO:
 		velocity.x = direction.x * ACCELERATION * delta * TARGET_FPS
 		velocity.z = direction.z * ACCELERATION * delta * TARGET_FPS
 		var angle = stepify(atan2(-direction.x, -direction.z), deg2rad(45))
