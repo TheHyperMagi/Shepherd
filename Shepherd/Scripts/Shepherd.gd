@@ -22,7 +22,7 @@ func control_loop(delta) -> void:
 	if direction:
 		velocity.x = direction.x * ACCELERATION * delta * TARGET_FPS
 		velocity.z = direction.z * ACCELERATION * delta * TARGET_FPS
-		var angle = stepify(atan2(-direction.x, -direction.z), deg2rad(45))
+		var angle = stepify(atan2(direction.x, direction.z), deg2rad(45))
 		rotation.y = lerp_angle(rotation.y, angle, delta * 5.0)
 
 	velocity = move_and_slide(velocity)
