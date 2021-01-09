@@ -13,7 +13,7 @@ func control_loop(delta) -> void:
 		Input.get_action_strength("move_backwards") - Input.get_action_strength("move_forwards")
 		).normalized()
 
-	if is_on_floor():
+	if is_on_floor() && !input:
 		velocity.x = lerp(velocity.x, 0, 10 * delta)
 		velocity.z = lerp(velocity.z, 0, 10 * delta)
 		

@@ -20,6 +20,7 @@ data = PoolVector3Array( -0.5, 1, 1, -1, 1, 0.5, -0.5, 1, 0.5, -0.5, 1, 1, -1, 1
 
 [node name="Camera" type="Camera" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 0 )
+fov = 90.0
 script = ExtResource( 3 )
 
 [node name="Sheep" parent="." instance=ExtResource( 1 )]
